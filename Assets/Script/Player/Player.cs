@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         PlayerMove();
-        Debug.DrawRay(transform.position, Vector2.down * 1.5f, Color.red);
+        Debug.DrawRay(transform.position, Vector2.down * .6f, Color.red);
     }
 
     private void FixedUpdate()
@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
 
     public bool PlayerGroundedCheck()
     {
-        return Physics2D.Raycast(transform.position, Vector2.down, 1.5f, groundedLayer);
+        return Physics2D.Raycast(transform.position, Vector2.down, .6f, groundedLayer);
     }
 
     #endregion
