@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -15,9 +16,16 @@ public class Player : MonoBehaviour
     public KeyCode jump = KeyCode.Space;
     public KeyCode runInput = KeyCode.LeftControl;
 
+    [Header("Player Animation")]
+    public Animator animator;
+    public float timeBetweenRotation = -1;
+    public string boolRun = "run";
+
     private Rigidbody2D rb;
     private float _currentSpeed;
     private bool _isMovement;
+
+    
 
     #region Unity Functions
 
@@ -52,21 +60,36 @@ public class Player : MonoBehaviour
         if(Input.GetKey(right))
         {
             rb.linearVelocity = new Vector2(_currentSpeed, rb.linearVelocity.y);
+            animator.SetBool(boolRun, true);
+            if (rb.transform.localRotation.x != 1)
+            {
+                rb.transform.DOScaleX(1, timeBetweenRotation);
+            }
         }
 
-        if(Input.GetKey(left))
+        else if(Input.GetKey(left))
         {
             rb.linearVelocity = new Vector2(-_currentSpeed, rb.linearVelocity.y);
+            animator.SetBool(boolRun, true);
+            if(rb.transform.localRotation.x != -1)
+            {
+                rb.transform.DOScaleX(-1, timeBetweenRotation);
+            }
+        }
+
+        else
+        {
+            animator.SetBool(boolRun, false);
         }
         
         if(rb.linearVelocity.x > 0)
         {
-            //rb.linearVelocity -= friction;
+            rb.linearVelocity += friction;
         }
 
         else if(rb.linearVelocity.x < 0)
         {
-            //rb.linearVelocity += friction;
+            rb.linearVelocity -= friction;
         }
         
     }
@@ -76,6 +99,7 @@ public class Player : MonoBehaviour
         if(Input.GetKey(jump) && PlayerGroundedCheck())
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            animator.SetTrigger("jump");
         }
     }
 
