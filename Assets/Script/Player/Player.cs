@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     public float timeBetweenRotation = -1;
     public string boolRun = "run";
 
-    private Rigidbody2D rb;
+    public Rigidbody2D rb { get; private set; }
     private float _currentSpeed;
     private bool _isMovement;
 
@@ -37,13 +37,13 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        PlayerMove();
+        //PlayerMove();
         Debug.DrawRay(transform.position, Vector2.down * .6f, Color.red);
     }
 
     private void FixedUpdate()
     {
-        PlayerJump();
+        //PlayerJump();
     }
 
     #endregion
