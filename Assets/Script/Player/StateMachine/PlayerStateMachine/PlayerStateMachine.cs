@@ -15,6 +15,7 @@ public class PlayerStateMachine : MonoBehaviour
             player = GetComponent<Player>();
         _states.Add(typeof(IdleState), new IdleState(player, this));
         _states.Add(typeof(WalkState), new WalkState(player, this));
+        _states.Add(typeof(JumpState), new JumpState(player, this));
     }
 
     private void Start()

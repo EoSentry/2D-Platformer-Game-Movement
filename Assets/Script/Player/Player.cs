@@ -13,13 +13,16 @@ public class Player : MonoBehaviour
     [Header("Player Inputs")]
     public KeyCode right = KeyCode.RightArrow;
     public KeyCode left = KeyCode.LeftArrow;
-    public KeyCode jump = KeyCode.Space;
+    public KeyCode jumpInput = KeyCode.Space;
     public KeyCode runInput = KeyCode.LeftControl;
 
     [Header("Player Animation")]
     public Animator animator;
     public float timeBetweenRotation = -1;
     public string boolRun = "run";
+    public string triggerJump = "jump";
+    public string boolDown = "down";
+    public string triggerIdle = "idle";
 
     public Rigidbody2D rb { get; private set; }
     private float _currentSpeed;
@@ -50,6 +53,7 @@ public class Player : MonoBehaviour
 
     #region Player Functions
 
+    #region Deprecated PlayerMove Code
     public void PlayerMove()
     {
         if (Input.GetKey(runInput))
@@ -96,12 +100,13 @@ public class Player : MonoBehaviour
 
     public void PlayerJump()
     {
-        if(Input.GetKey(jump) && PlayerGroundedCheck())
+        if(Input.GetKey(jumpInput) && PlayerGroundedCheck())
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             animator.SetTrigger("jump");
         }
     }
+    #endregion
 
     public bool PlayerGroundedCheck()
     {

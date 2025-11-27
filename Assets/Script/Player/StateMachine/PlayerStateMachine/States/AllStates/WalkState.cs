@@ -15,6 +15,12 @@ public class WalkState : StateBase
     }
     public override void UpdateState()
     {
+        if(Input.GetKeyDown(_player.jumpInput) && _player.PlayerGroundedCheck())
+        {
+            _playerStateMachine.SwitchState(typeof(JumpState));
+            return;
+        }
+
         float currentSpeed = Input.GetKey(_player.runInput) ? _player.runSpeed : _player.moveSpeed;
         float horizontalSpeed = 0;
         

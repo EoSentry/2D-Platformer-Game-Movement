@@ -14,6 +14,13 @@ public class IdleState : StateBase
     public override void ExitState() { }
     public override void UpdateState() 
     {
+        if(Input.GetKeyDown(_player.jumpInput) && _player.PlayerGroundedCheck())
+        {
+            _playerStateMachine.SwitchState(typeof(JumpState));
+            return;
+        }
+
+
         if (Input.GetKey(_player.right) || Input.GetKey(_player.left))
         {
             _playerStateMachine.SwitchState(typeof(WalkState));
