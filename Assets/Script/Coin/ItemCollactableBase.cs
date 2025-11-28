@@ -18,6 +18,8 @@ public class ItemCollactableBase : MonoBehaviour
     protected virtual void Collect()
     {
         Debug.Log("Collect");
+        transform.DOKill();
+        transform.localScale = Vector3.one;
         StartCoroutine(CoinSize());
         OnCollect();
     }
@@ -35,6 +37,10 @@ public class ItemCollactableBase : MonoBehaviour
 
     IEnumerator CoinSize()
     {
+        transform.DOKill();
+        transform.localScale = Vector3.one;
+
+
         gameObject.transform.DOScale(1.5f, .2f);
         yield return new WaitForSeconds(.32f);
         gameObject.transform.DOScale(0, .5f);
