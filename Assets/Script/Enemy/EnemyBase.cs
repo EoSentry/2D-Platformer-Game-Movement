@@ -12,6 +12,17 @@ public class EnemyBase : MonoBehaviour
     public HealthBase healthBase;
     public Rigidbody2D rb;
     public float visionRage = 5f;
+    public float speedMove = 10f;
+    public BoxCollider2D enemyCollider;
+
+
+    private void Awake()
+    {
+        if(rb == null)
+            rb = GetComponent<Rigidbody2D>();
+        if (enemyCollider == null)
+            enemyCollider = GetComponent<BoxCollider2D>();
+    }
 
     private bool _isDead;
 
@@ -19,9 +30,9 @@ public class EnemyBase : MonoBehaviour
     {
         Debug.DrawRay(transform.position, Vector2.right * visionRage, Color.blue);
 
-        if(CheckPlayer())
+        if(CheckPlayer() && !_isDead)
         {
-            rb.transform.position -= player.position * Time.deltaTime;
+            rb.transform.position -= player.position * Time.deltaTime * speedMove;
         }
         OnEnemyKill();
     }
@@ -31,8 +42,10 @@ public class EnemyBase : MonoBehaviour
         if(healthBase._currentLife <= 0 && !_isDead)
         {
             _isDead = true;
-            PlayerDeathAnimation();
+            EnemyDeathAnimation();
             Debug.Log("Estou Morto");
+            enemyCollider.enabled = false;
+            rb.simulated = false;
         }
     }
 
@@ -49,17 +62,17 @@ public class EnemyBase : MonoBehaviour
         if(health != null && !_isDead)
         {
             health.Damage(damage);
-            PlayerAttackAnimation();
+            EnemyAttackAnimation();
         }
     }
 
 
-    private void PlayerAttackAnimation()
+    private void EnemyAttackAnimation()
     {
         animator.SetTrigger("Attack");
     }
 
-    private void PlayerDeathAnimation()
+    private void EnemyDeathAnimation()
     {
         animator.SetTrigger("Death");
     }
