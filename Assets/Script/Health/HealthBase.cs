@@ -10,7 +10,7 @@ public class HealthBase : MonoBehaviour
     public bool isPlayer = false;
     public Ease ease = Ease.OutBack;
 
-    private int _currentLife;
+    public int _currentLife;
 
     private void Awake()
     {
@@ -40,9 +40,12 @@ public class HealthBase : MonoBehaviour
 
     IEnumerator CharacterAnimatonDeath()
     {
-        transform.DOScale(1.5f, .3f).SetEase(ease);
-        yield return new WaitForSeconds(.1f);
-        transform.DOScale(0, .3f);
+        if (destroyOnKill)
+        {
+            transform.DOScale(1.5f, .3f).SetEase(ease);
+            yield return new WaitForSeconds(.1f);
+            transform.DOScale(0, .3f);
+        }
 
         yield return new WaitForSeconds(.35f);
         if(isPlayer && destroyOnKill)
