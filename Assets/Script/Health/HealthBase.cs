@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthBase : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class HealthBase : MonoBehaviour
     public Transform prefab;
     public bool isPlayer = false;
     public Ease ease = Ease.OutBack;
+    public Image lifeBar;
 
     public int _currentLife;
 
@@ -21,6 +23,7 @@ public class HealthBase : MonoBehaviour
     {
         Debug.Log("Tomei dano");
         _currentLife -= damage;
+        lifeBar.fillAmount = (float)_currentLife / Life;
         Kill();
     }
 

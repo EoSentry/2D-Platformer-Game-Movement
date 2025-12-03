@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
@@ -16,6 +17,9 @@ public class EnemyBase : MonoBehaviour
     public BoxCollider2D enemyCollider;
 
 
+    private Vector2 _playerTransform;
+
+
     private void Awake()
     {
         if(rb == null)
@@ -28,13 +32,17 @@ public class EnemyBase : MonoBehaviour
 
     private void Update()
     {
-        Debug.DrawRay(transform.position, Vector2.right * visionRage, Color.blue);
+        Debug.DrawRay(transform.position, _playerTransform * visionRage, Color.blue);
+        Vector2 playerReference = (player.position - transform.position).normalized;
+        _playerTransform = playerReference;
 
-        if(CheckPlayer() && !_isDead)
+        if (CheckPlayer() && !_isDead)
         {
-            rb.transform.position -= player.position * Time.deltaTime * speedMove;
+            Vector2 playerDirection = (player.position - transform.position).normalized;
+            rb.transform.position += (Vector3)playerDirection * Time.deltaTime * speedMove;
         }
         OnEnemyKill();
+        EnemyDirection();
     }
 
     private void OnEnemyKill()
@@ -52,7 +60,7 @@ public class EnemyBase : MonoBehaviour
 
     private bool CheckPlayer()
     {
-        return Physics2D.Raycast(transform.position, Vector2.right, visionRage, playerLayer);
+        return Physics2D.Raycast(transform.position, _playerTransform, visionRage, playerLayer);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -80,6 +88,20 @@ public class EnemyBase : MonoBehaviour
     public void Damage(int amount)
     {
         healthBase.Damage(amount);
+    }
+
+    public void EnemyDirection()
+    {
+        float dirX = player.position.x - transform.position.x;
+
+        if(dirX > 0)
+        {
+            transform.DOScaleX(-1, .1f);
+        }
+        else if(dirX < 0)
+        {
+            transform.DOScaleX(1, .1f);
+        }
     }
 
 }
