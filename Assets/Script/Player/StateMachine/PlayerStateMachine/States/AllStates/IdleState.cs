@@ -8,7 +8,7 @@ public class IdleState : StateBase
 
     public override void EnterState()
     {
-        _player.soPlayer.animator.SetBool(_player.soPlayer.boolRun, false);
+        _player._currentPlayer.SetBool(_player.soPlayer.boolRun, false);
         _player.rb.linearVelocity = new Vector2(0, _player.rb.linearVelocity.y);
     }
     public override void ExitState() { }

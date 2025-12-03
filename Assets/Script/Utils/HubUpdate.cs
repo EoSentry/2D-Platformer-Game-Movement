@@ -16,7 +16,7 @@ public class HubUpdate : MonoBehaviour
 
     public void Update()
     {
-        _currentCoins = itemManager.coins;
+        _currentCoins = itemManager.coins.value;
         
         if(_currentCoins != _lastCoins)
         {
