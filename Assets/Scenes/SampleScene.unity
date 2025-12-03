@@ -5577,7 +5577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845fc939ebac7664ca6de92e762f74a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemManager
-  coins: 0
+  coins: {fileID: 11400000, guid: 9f3ecdbc819419342af3b75f0a052025, type: 2}
 --- !u!4 &1808858030
 Transform:
   m_ObjectHideFlags: 0
