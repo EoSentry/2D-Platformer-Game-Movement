@@ -10,12 +10,12 @@ public class JumpState : StateBase
 
     public override void EnterState()
     {
-        Vector2 jumpForceVec = new Vector2(_player.rb.linearVelocity.x, _player.jumpForce);
+        Vector2 jumpForceVec = new Vector2(_player.rb.linearVelocity.x, _player.soPlayer.jumpForce);
         _player.rb.linearVelocity = jumpForceVec;
 
-        _player.animator.SetTrigger(_player.triggerJump);
+        _player._currentPlayer.SetTrigger(_player.soPlayer.triggerJump);
 
-        _player.animator.SetBool(_player.boolDown, false);
+        _player._currentPlayer.SetBool(_player.soPlayer.boolDown, false);
         _isFallingAnimation = false;
 
         Debug.Log("JumpState: Entrou. Disparando trigger 'jump' e bool 'down' false.");
@@ -24,13 +24,13 @@ public class JumpState : StateBase
 
     public override void ExitState() 
     {
-        _player.animator.SetBool(_player.boolDown, false);
+        _player._currentPlayer.SetBool(_player.soPlayer.boolDown, false);
     }
     public override void UpdateState()
     {
         if(_player.rb.linearVelocity.y < 0 && !_isFallingAnimation)
         {
-            _player.animator.SetBool(_player.boolDown, true);
+            _player._currentPlayer.SetBool(_player.soPlayer.boolDown, true);
             _isFallingAnimation = true;
             Debug.Log("JumpState: Velocidade Y < 0. Ativando bool 'down' true.");
         }
@@ -43,7 +43,7 @@ public class JumpState : StateBase
         }
 
         float horizontalSpeed = 0;
-        float currentSpeed = Input.GetKey(_player.runInput) ? _player.runSpeed : _player.moveSpeed;
+        float currentSpeed = Input.GetKey(_player.runInput) ? _player.soPlayer.runSpeed : _player.soPlayer.moveSpeed;
         if (Input.GetKey(_player.right))
             horizontalSpeed = currentSpeed;
         else if(Input.GetKey(_player.left))

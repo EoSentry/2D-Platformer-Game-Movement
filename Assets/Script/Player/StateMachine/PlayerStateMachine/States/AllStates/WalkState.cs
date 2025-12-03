@@ -7,11 +7,11 @@ public class WalkState : StateBase
 
     public override void EnterState()
     {
-        _player.animator.SetBool(_player.boolRun, true);
+        _player._currentPlayer.SetBool(_player.soPlayer.boolRun, true);
     }
     public override void ExitState() 
     {
-        _player.animator.SetBool(_player.boolRun, false);
+        _player._currentPlayer.SetBool(_player.soPlayer.boolRun, false);
     }
     public override void UpdateState()
     {
@@ -21,7 +21,7 @@ public class WalkState : StateBase
             return;
         }
 
-        float currentSpeed = Input.GetKey(_player.runInput) ? _player.runSpeed : _player.moveSpeed;
+        float currentSpeed = Input.GetKey(_player.runInput) ? _player.soPlayer.runSpeed : _player.soPlayer.moveSpeed;
         float horizontalSpeed = 0;
         
         if(Input.GetKey(_player.right))
@@ -30,7 +30,7 @@ public class WalkState : StateBase
 
             if(_player.rb.transform.localScale.x != 1)
             {
-                _player.transform.DOScaleX(1, _player.timeBetweenRotation);
+                _player.transform.DOScaleX(1, _player.soPlayer.timeBetweenRotation);
             }
         }
 
@@ -40,7 +40,7 @@ public class WalkState : StateBase
 
             if(_player.rb.transform.localScale.x != -1)
             {
-                _player.transform.DOScaleX(-1, _player.timeBetweenRotation);
+                _player.transform.DOScaleX(-1, _player.soPlayer.timeBetweenRotation);
             }
         }
 

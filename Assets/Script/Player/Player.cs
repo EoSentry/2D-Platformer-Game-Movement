@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Player")]
+    public SOPlayer soPlayer;
+
+
     [Header("Player Setup")]
-    public float moveSpeed = 10f;
-    public float runSpeed = 20f;
-    public float jumpForce = 15f;
     public Vector2 friction = new Vector2(.1f, 0);
     public LayerMask groundedLayer;
 
@@ -17,12 +18,7 @@ public class Player : MonoBehaviour
     public KeyCode runInput = KeyCode.LeftControl;
 
     [Header("Player Animation")]
-    public Animator animator;
-    public float timeBetweenRotation = -1;
-    public string boolRun = "run";
-    public string triggerJump = "jump";
-    public string boolDown = "down";
-    public string triggerIdle = "idle";
+    public Animator _currentPlayer;
 
     public Rigidbody2D rb { get; private set; }
     private float _currentSpeed;
@@ -36,6 +32,7 @@ public class Player : MonoBehaviour
     {
         if(rb == null)
             rb = GetComponent<Rigidbody2D>();
+        _currentPlayer = Instantiate(soPlayer.animator, transform);
     }
 
     private void Update()
@@ -57,33 +54,33 @@ public class Player : MonoBehaviour
     public void PlayerMove()
     {
         if (Input.GetKey(runInput))
-            _currentSpeed = runSpeed;
+            _currentSpeed = soPlayer.runSpeed;
         else
-            _currentSpeed = moveSpeed;
+            _currentSpeed = soPlayer.moveSpeed;
 
         if(Input.GetKey(right))
         {
             rb.linearVelocity = new Vector2(_currentSpeed, rb.linearVelocity.y);
-            animator.SetBool(boolRun, true);
+            soPlayer.animator.SetBool(soPlayer.boolRun, true);
             if (rb.transform.localRotation.x != 1)
             {
-                rb.transform.DOScaleX(1, timeBetweenRotation);
+                rb.transform.DOScaleX(1, soPlayer.timeBetweenRotation);
             }
         }
 
         else if(Input.GetKey(left))
         {
             rb.linearVelocity = new Vector2(-_currentSpeed, rb.linearVelocity.y);
-            animator.SetBool(boolRun, true);
+            soPlayer.animator.SetBool(soPlayer.boolRun, true);
             if(rb.transform.localRotation.x != -1)
             {
-                rb.transform.DOScaleX(-1, timeBetweenRotation);
+                rb.transform.DOScaleX(-1, soPlayer.timeBetweenRotation);
             }
         }
 
         else
         {
-            animator.SetBool(boolRun, false);
+            soPlayer.animator.SetBool(soPlayer.boolRun, false);
         }
         
         if(rb.linearVelocity.x > 0)
@@ -102,8 +99,8 @@ public class Player : MonoBehaviour
     {
         if(Input.GetKey(jumpInput) && PlayerGroundedCheck())
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            animator.SetTrigger("jump");
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, soPlayer.jumpForce);
+            soPlayer.animator.SetTrigger("jump");
         }
     }
     #endregion

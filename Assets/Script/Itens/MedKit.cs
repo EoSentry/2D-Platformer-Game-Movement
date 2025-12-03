@@ -28,6 +28,7 @@ public class MedKit : MonoBehaviour
             health._currentLife += recoverer;
             if(health._currentLife > health.Life)
                 health._currentLife = health.Life;
+            health.lifeBar.fillAmount = (float)health._currentLife / health.Life;
         }
     }
 
