@@ -6402,9 +6402,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4606302399035567095, guid: 7437c8524b83bef4ca34d4face5f39a0, type: 3}
-      propertyPath: prefabProjectile
+      propertyPath: playerSideReference
       value: 
-      objectReference: {fileID: 8331657788989697039, guid: 8900558ef4749624eafc6ec60bb25999, type: 3}
+      objectReference: {fileID: 699835702}
     - target: {fileID: 5595886751036730815, guid: 7437c8524b83bef4ca34d4face5f39a0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.15085
