@@ -20,6 +20,10 @@ public class Player : MonoBehaviour
     [Header("Player Animation")]
     public Animator _currentPlayer;
 
+    [Header("Player Particles")]
+    public ParticleSystem walk;
+    public ParticleSystem jump;
+
     public Rigidbody2D rb { get; private set; }
     private float _currentSpeed;
     private bool _isMovement;
@@ -39,6 +43,7 @@ public class Player : MonoBehaviour
     {
         //PlayerMove();
         Debug.DrawRay(transform.position, Vector2.down * .6f, Color.red);
+        PlayParticles();
     }
 
     private void FixedUpdate()
@@ -108,6 +113,30 @@ public class Player : MonoBehaviour
     public bool PlayerGroundedCheck()
     {
         return Physics2D.Raycast(transform.position, Vector2.down, .6f, groundedLayer);
+    }
+
+    private void PlayParticles()
+    {
+        if(PlayerGroundedCheck())
+        {
+            walk.Play();
+            Debug.Log("Particulas de andar");
+        }
+
+        if(!PlayerGroundedCheck())
+        {
+            walk.Stop();
+            Debug.Log("Particulas de andar desativadas");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && PlayerGroundedCheck())
+        {
+            jump.Play();
+        }
+
+        else
+            jump.Stop();
+
     }
 
     #endregion

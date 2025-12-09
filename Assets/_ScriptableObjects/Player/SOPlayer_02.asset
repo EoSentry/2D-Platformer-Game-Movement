@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SOPlayer
   moveSpeed: 20
   runSpeed: 35
-  jumpForce: 45
+  jumpForce: 20
   animator: {fileID: 6413013834153556191, guid: 7b9464d0a584f534285b5bdae43f0485, type: 3}
   timeBetweenRotation: -1
   boolRun: run

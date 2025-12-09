@@ -2,10 +2,13 @@ using DG.Tweening;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ItemCollactableBase : MonoBehaviour
 {
     public string playerTag = "Player";
+    public CircleCollider2D cicle;
+    public ParticleSystem particleSystem;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -27,7 +30,11 @@ public class ItemCollactableBase : MonoBehaviour
 
     protected virtual void OnCollect()
     {
-        
+        if(particleSystem != null)
+        {
+            cicle.enabled = false;
+            particleSystem.Play();
+        }
     }
 
     public void OnDestroyItem()
@@ -44,7 +51,7 @@ public class ItemCollactableBase : MonoBehaviour
         gameObject.transform.DOScale(1.5f, .2f);
         yield return new WaitForSeconds(.32f);
         gameObject.transform.DOScale(0, .5f);
-        yield return new WaitForSeconds(.27f);
+        yield return new WaitForSeconds(5f);
         OnDestroyItem();
     }
 }
