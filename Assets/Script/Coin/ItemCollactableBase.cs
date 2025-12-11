@@ -10,6 +10,9 @@ public class ItemCollactableBase : MonoBehaviour
     public CircleCollider2D cicle;
     public ParticleSystem particleSystem;
 
+    [Header("Audio Source")]
+    public AudioSource collectSFX;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.CompareTag(playerTag))
@@ -47,6 +50,7 @@ public class ItemCollactableBase : MonoBehaviour
         transform.DOKill();
         transform.localScale = Vector3.one;
 
+        collectSFX.Play();
 
         gameObject.transform.DOScale(1.5f, .2f);
         yield return new WaitForSeconds(.32f);

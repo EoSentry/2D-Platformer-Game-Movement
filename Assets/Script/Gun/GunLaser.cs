@@ -7,12 +7,20 @@ public class GunLaser : MonoBehaviour
     public MidasLaser midas;
     public Transform shootpoint;
     public Transform playerSideReference;
+    public AudioSource laserSounde;
+
+    private void Awake()
+    {
+        if (playerSideReference == null)
+            playerSideReference = GameObject.FindObjectOfType<Player>().transform;
+    }
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Mouse1))
         {
             Shoot();
+            laserSounde.Play();
         }
     }
 
